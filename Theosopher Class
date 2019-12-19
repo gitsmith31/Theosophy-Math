@@ -1,3 +1,6 @@
+# python 3x
+# instantiate the class then enter HELP
+
 class theosopher():
     def __init__(self):
         print("Greetings, my name is Merlin and I can do Theosophic math!!\r")
