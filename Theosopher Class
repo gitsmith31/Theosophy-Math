@@ -1,0 +1,91 @@
+class theosopher():
+    def __init__(self):
+        print("Greetings, my name is Merlin and I can do Theosophic math!!\r")
+        self.num = 0
+        self.newNum = 0
+        self.flow()
+    def flow(self):
+        #ask for number, assist, stop
+        selection = input("\tYou can enter a whole number, ask for HELP or just STOP.\r")        
+        #if stop, print() goodbye
+        if selection.lower() in ["stop", "end", "quit", "q", "qq", "exit"]:
+            print("Farewell until next time!\r")
+        #if assit, call assist(), flow()
+        elif selection.lower() in ["help"]:
+            self.assist()
+            self.flow()
+        #if number, store, call action(num)
+        elif float(selection).is_integer():
+            self.num = int(selection)
+            self.action()
+        else:
+            print("Huh, not sure about that: " , selection)
+        
+    def action(self):
+        #ask add, reduce, stop
+        selection = input("Would you like to ADD or REDUCE that number? Or you may select a NEW number, shift focus to CURRENT number, or STOP?\r")
+        #if stop, print() goodbye
+        if selection.lower() in ["stop", "end", "quit", "q", "qq", "exit"]:
+            print("Farewell until next time!\r")
+        #if new, call action() 
+        if selection.lower() in ["new"]:
+            self.flow()
+        #if current, make the old, new
+        if selection.lower() in ["current"]:
+            if self.newNum != 0:
+                self.num = self.newNum
+                print("Yes, we will now focus on the number: " , self.num)
+                self.action()
+            elif self.newNum == 0:
+                print("Yes, we are ready to focus on: " , self.num)
+                self.action()
+        #if add, call add(num)
+        if selection.lower() == "add":
+            self.add()
+        #if reduce, call reduce(num)
+        if selection.lower() == "reduce":
+            self.reduce()
+    def assist(self):
+        #print() an explaination
+        #call flow()
+        print("\t**** You've found help! ****\r")
+        print("\tTheosophical addition adds to a number, each number that came before it until it reaches zero. 4 = (4+3+2+1+0)= 10\r")
+        print("\tTheosophical reduction adds together the digits that make up the number. Repeat the process until the answer is a single-digit number.  (13 = (1+3) = 4)\r")
+        print("\tYou can choose a new number any time by entering NEW. If you've just performed an addition or reduction and you now want to perform an operation on the answer we just created, type CURRENT.\r")
+        print("\t****\r")
+    def add(self):
+        #performs addition
+        #calls action()
+        self.newNum = self.num
+        addArray = [self.newNum]
+        while self.newNum > 0:
+            self.newNum = self.newNum - 1
+            addArray.append(self.newNum)
+        self.newNum = sum(addArray)
+        print("Theosophically, " , self.num , " adds to: " , self.newNum)
+        self.num = self.newNum
+        self.action()
+
+    def reduce(self):
+        #performs reduction
+        #calls action()
+        if self.num < 10:
+            print("That is easy since " , self.num , "is already Theosophically reduced.\r")
+            self.action()
+        else:
+            self.newNum = list(str(self.num))
+            reduceArray = [ int(x) for x in self.newNum ]
+            self.newNum = sum(reduceArray)
+            if self.newNum < 10:
+                print("Theosophically, " , self.num , "reduces to: " , self.newNum)
+                self.action()
+            elif self.newNum > 9:
+                print(self.num , "\r")
+                while int(self.newNum) > 9:
+                    print(self.newNum)
+                    reduceArray = list(str(self.newNum))
+                    reduceArray = [ int(x) for x in reduceArray ]
+                    self.newNum = sum(reduceArray)
+                else:
+                    print("Theosophically, " , self.num , "reduces to: " , self.newNum)
+                    self.action()
